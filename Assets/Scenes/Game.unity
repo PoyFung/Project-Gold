@@ -2362,7 +2362,6 @@ MonoBehaviour:
   backRightWheel: {fileID: 1852255936}
   backLeftWheel: {fileID: 22500657}
   suspensionDist: 1
-  oldDist: 0
   suspensionPower: 25
   dampSensitivity: 500
   maxDamp: 50
@@ -4351,7 +4350,6 @@ MonoBehaviour:
   backRightWheel: {fileID: 9085856727675219580}
   backLeftWheel: {fileID: 7341410102221994230}
   suspensionDist: 1
-  oldDist: 0
   suspensionPower: 50
   dampSensitivity: 5000
   maxDamp: 500

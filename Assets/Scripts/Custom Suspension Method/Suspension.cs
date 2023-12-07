@@ -17,8 +17,12 @@ public class Suspension : MonoBehaviour
     public GameObject backRightWheel;
     public GameObject backLeftWheel;
 
+    private float oldDistFR;
+    private float oldDistFL;
+    private float oldDistBR;
+    private float oldDistBL;
+
     public float suspensionDist=5f;
-    public float oldDist;
     public float suspensionPower = 100f;
     public float dampSensitivity = 500f;
     public float maxDamp = 50f;
@@ -33,7 +37,10 @@ public class Suspension : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-        oldDist = suspensionDist;
+        oldDistFR = suspensionDist;
+        oldDistFL = suspensionDist;
+        oldDistBR = suspensionDist;
+        oldDistBL = suspensionDist;
     }
     void Start()
     {
@@ -48,13 +55,13 @@ public class Suspension : MonoBehaviour
 
     void FixedUpdate()
     {
-        SuspensionFunction(FRForce, frontRightWheel);
-        SuspensionFunction(FLForce, frontLeftWheel);
-        SuspensionFunction(BRForce, backRightWheel);
-        SuspensionFunction(BLForce, backLeftWheel);
+        SuspensionFunction(FRForce, frontRightWheel, oldDistFR);
+        SuspensionFunction(FLForce, frontLeftWheel, oldDistFL);
+        SuspensionFunction(BRForce, backRightWheel, oldDistBR);
+        SuspensionFunction(BLForce, backLeftWheel, oldDistBL);
     }
 
-    void SuspensionFunction(Transform force,GameObject wheel)
+    void SuspensionFunction(Transform force,GameObject wheel, float oldDist)
     {
         if (Physics.Raycast(force.position,-transform.up, out hitInfo, suspensionDist, layers))
         {
