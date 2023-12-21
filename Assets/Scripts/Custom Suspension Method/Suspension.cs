@@ -7,40 +7,27 @@ public class Suspension : MonoBehaviour
 {
     public Rigidbody rb;
 
-    public Transform FRForce;
-    public Transform FLForce;
-    public Transform BRForce;
-    public Transform BLForce;
+    public Transform FRPos;
+    public Transform FLPos;
+    public Transform BRPos;
+    public Transform BLPos;
+
+    public float suspensionRestDist=1;
+    public float springStrength=100;
+    public float springDamper=15;
 
     public GameObject frontRightWheel;
     public GameObject frontLeftWheel;
     public GameObject backRightWheel;
     public GameObject backLeftWheel;
 
-    private float oldDistFR;
-    private float oldDistFL;
-    private float oldDistBR;
-    private float oldDistBL;
-
-    public float suspensionDist=5f;
-    public float suspensionPower = 100f;
-    public float dampSensitivity = 500f;
-    public float maxDamp = 50f;
-
     public LayerMask layers;
-
-    private GameObject force;
-
-    Ray rayPos1;
     RaycastHit hitInfo;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        oldDistFR = suspensionDist;
-        oldDistFL = suspensionDist;
-        oldDistBR = suspensionDist;
-        oldDistBL = suspensionDist;
+
     }
     void Start()
     {
@@ -55,23 +42,27 @@ public class Suspension : MonoBehaviour
 
     void FixedUpdate()
     {
-        SuspensionFunction(FRForce, frontRightWheel, oldDistFR);
-        SuspensionFunction(FLForce, frontLeftWheel, oldDistFL);
-        SuspensionFunction(BRForce, backRightWheel, oldDistBR);
-        SuspensionFunction(BLForce, backLeftWheel, oldDistBL);
+        SuspensionFunction(FRPos, frontRightWheel);
+        SuspensionFunction(FLPos, frontLeftWheel);
+        SuspensionFunction(BRPos, backRightWheel);
+        SuspensionFunction(BLPos, backLeftWheel);
     }
 
-    void SuspensionFunction(Transform force,GameObject wheel, float oldDist)
+    void SuspensionFunction(Transform forcePos,GameObject wheel)
     {
-        if (Physics.Raycast(force.position,-transform.up, out hitInfo, suspensionDist, layers))
+        if (Physics.Raycast(forcePos.position,-transform.up, out hitInfo, suspensionRestDist, layers))
         {
-            Vector3 suspensionForce = Mathf.Clamp(suspensionDist - hitInfo.distance, 0, 3) * suspensionPower * transform.up;
-            Vector3 dampeningForce = Mathf.Clamp((oldDist - hitInfo.distance) * dampSensitivity, 0, maxDamp) * transform.up;
-            rb.AddForceAtPosition(suspensionForce+dampeningForce*Time.deltaTime, hitInfo.point);
+            Vector3 springForceDir = forcePos.forward;
+            Vector3 wheelWorldVel = rb.GetPointVelocity(forcePos.position);
 
-            Debug.DrawLine(force.position, wheel.transform.position, Color.red);
-            wheel.transform.position = hitInfo.point+transform.up;
+            float offset = suspensionRestDist-hitInfo.distance;
+            float wheelVertVel = Vector3.Dot(springForceDir,wheelWorldVel);
+            float totalForce = (offset*springStrength)-(wheelVertVel*springDamper);
+
+            rb.AddForceAtPosition(springForceDir*totalForce, forcePos.position);
+
+            Debug.DrawLine(forcePos.position, wheel.transform.position, Color.red);
+            wheel.transform.position = hitInfo.point + transform.up;
         }
-        oldDist = hitInfo.distance;
     }
 }
