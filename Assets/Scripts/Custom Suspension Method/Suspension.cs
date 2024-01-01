@@ -15,6 +15,7 @@ public class Suspension : MonoBehaviour
     public float suspensionRestDist=1;
     public float springStrength=100;
     public float springDamper=15;
+    [Range(0, 1)] public float tireGrip;
 
     public GameObject frontRightWheel;
     public GameObject frontLeftWheel;
@@ -46,13 +47,18 @@ public class Suspension : MonoBehaviour
         SuspensionFunction(FLPos, frontLeftWheel);
         SuspensionFunction(BRPos, backRightWheel);
         SuspensionFunction(BLPos, backLeftWheel);
+
+        SideFrictionFunction(FRPos, frontRightWheel);
+        SideFrictionFunction(FLPos, frontLeftWheel);
+        SideFrictionFunction(BRPos, backRightWheel);
+        SideFrictionFunction(BLPos, backLeftWheel);
     }
 
     void SuspensionFunction(Transform forcePos,GameObject wheel)
     {
         if (Physics.Raycast(forcePos.position,-transform.up, out hitInfo, suspensionRestDist, layers))
         {
-            Vector3 springForceDir = forcePos.forward;
+            Vector3 springForceDir = forcePos.up;
             Vector3 wheelWorldVel = rb.GetPointVelocity(forcePos.position);
 
             float offset = suspensionRestDist-hitInfo.distance;
@@ -64,5 +70,22 @@ public class Suspension : MonoBehaviour
             Debug.DrawLine(forcePos.position, wheel.transform.position, Color.red);
             wheel.transform.position = hitInfo.point + transform.up;
         }
+    }
+
+    void SideFrictionFunction(Transform forcePos, GameObject wheel)
+    {
+        Vector3 frictionDir = forcePos.right;
+        Vector3 wheelWorldVel = rb.GetPointVelocity(forcePos.position);
+
+        float wheelHorzVel = Vector3.Dot(frictionDir, wheelWorldVel);
+        float velChange = -wheelHorzVel * tireGrip;
+        float accel = velChange / Time.fixedDeltaTime;
+
+        rb.AddForceAtPosition(frictionDir * accel, forcePos.position);
+    }
+
+    void AccelrateFunction()
+    {
+
     }
 }
