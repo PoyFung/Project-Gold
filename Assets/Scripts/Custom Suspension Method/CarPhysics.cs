@@ -62,8 +62,8 @@ public class CarPhysics : MonoBehaviour
         Acceleration(FRPos, frontRightWheel);
         Acceleration(FLPos, frontLeftWheel);
 
-        Steering(FRPos);
-        Steering(FLPos);
+        Steering(FRPos,frontRightWheel);
+        Steering(FLPos,frontLeftWheel);
 
         DebugFunction(FRPos);
         DebugFunction(FLPos);
@@ -71,11 +71,20 @@ public class CarPhysics : MonoBehaviour
         DebugFunction(BLPos);
     }
 
-    void Steering(Transform forcePos)
+    void Steering(Transform forcePos, GameObject wheel)
     {
         float input = PlayerController.inputHor;
         float rotationAmount = input * Time.deltaTime;
-        forcePos.transform.Rotate(0,input,0);
+        var forceRot = forcePos.eulerAngles;
+
+        rotationAmount = Mathf.Clamp(rotationAmount,-100,100);
+        if (input>0 || input <0)
+        {
+            forcePos.transform.localRotation=Quaternion.Euler(0, rotationAmount, 0);
+        }
+
+        var rot_y = Quaternion.Euler(-90, forceRot.y+90, 0);
+        wheel.transform.rotation=rot_y;
     }
 
     void WheelAnimation()
@@ -112,7 +121,7 @@ public class CarPhysics : MonoBehaviour
             float velChange = -wheelHorzVel * tireGrip;
             float accel = velChange / Time.fixedDeltaTime;
 
-            rb.AddForceAtPosition(frictionDir * accel, forcePos.position);
+            rb.AddForceAtPosition(frictionDir * accel*10, forcePos.position);
         }
     }
 

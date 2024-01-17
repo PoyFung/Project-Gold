@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public Rigidbody player;
     public float power=10;
-    public float turnSpeed=10;
+    public float turnAmount=10;
 
     public static float inputVert;
     public static float inputHor;
@@ -21,13 +21,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         inputVert = Input.GetAxis("Vertical")*power;
-        inputHor = Input.GetAxis("Horizontal")*turnSpeed;
+        inputHor = Input.GetAxis("Horizontal")*turnAmount*10;
     }
 
     private void FixedUpdate()
     {
         //Accelerate();
-        Rotate();
+        //Rotate();
     }
 
     void Accelerate()
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     void Rotate()
     {
-        float rotationAmount = inputHor * Time.deltaTime * turnSpeed;
+        float rotationAmount = inputHor * Time.deltaTime * turnAmount;
         Quaternion deltaRotation = Quaternion.Euler(0f, rotationAmount, 0f);
 
         Quaternion targetRotation = player.rotation * deltaRotation;

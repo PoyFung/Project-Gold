@@ -2335,7 +2335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1458672402}
   power: 10
-  turnSpeed: 20
+  turnAmount: 10
 --- !u!114 &1458672404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4340,7 +4340,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4437498023699281960}
   power: 2500
-  turnSpeed: 25
+  turnAmount: 100
 --- !u!114 &4437498023699281962
 MonoBehaviour:
   m_ObjectHideFlags: 0
