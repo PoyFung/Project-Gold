@@ -83,10 +83,10 @@ public class CarPhysics : MonoBehaviour
     {
         float input = PlayerController.inputHor;
         float rotationLimit = input * Time.deltaTime;
-        var forceRot = forcePos.eulerAngles;
+        var forceRot = forcePos.localEulerAngles;
         var orgWheelRot = wheel.transform.localRotation;
 
-        rotationLimit = Mathf.Clamp(rotationLimit,-100,100);
+        rotationLimit = Mathf.Clamp(rotationLimit,-20,20);
         if (input>0 || input <0)
         {
             forcePos.transform.localRotation = Quaternion.Euler(0, rotationLimit, 0);
@@ -98,7 +98,7 @@ public class CarPhysics : MonoBehaviour
         }
 
         var rot_y = Quaternion.Euler(-90, forceRot.y+90, 0);
-        wheel.transform.localRotation=rot_y;
+        wheel.transform.localRotation= rot_y;
     }
 
     void WheelAnimation()
