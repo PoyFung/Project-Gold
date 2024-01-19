@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.Windows;
 
 public class CarPhysics : MonoBehaviour
 {
@@ -54,13 +55,20 @@ public class CarPhysics : MonoBehaviour
         Suspension(BRPos, backRightWheel);
         Suspension(BLPos, backLeftWheel);
 
-        SideFriction(FRPos, frontRightWheel);
-        SideFriction(FLPos, frontLeftWheel);
-        SideFriction(BRPos, backRightWheel);
-        SideFriction(BLPos, backLeftWheel);
+        HorizontalFriction(FRPos);
+        HorizontalFriction(FLPos);
+        HorizontalFriction(BRPos);
+        HorizontalFriction(BLPos);
 
-        Acceleration(FRPos, frontRightWheel);
-        Acceleration(FLPos, frontLeftWheel);
+        VerticalFriction(FRPos);
+        VerticalFriction(FLPos);
+        VerticalFriction(BRPos);
+        VerticalFriction(BLPos);
+
+        Acceleration(FRPos);
+        Acceleration(FLPos);
+        Acceleration(BRPos);
+        Acceleration(BLPos);
 
         Steering(FRPos,frontRightWheel);
         Steering(FLPos,frontLeftWheel);
@@ -74,17 +82,23 @@ public class CarPhysics : MonoBehaviour
     void Steering(Transform forcePos, GameObject wheel)
     {
         float input = PlayerController.inputHor;
-        float rotationAmount = input * Time.deltaTime;
+        float rotationLimit = input * Time.deltaTime;
         var forceRot = forcePos.eulerAngles;
+        var orgWheelRot = wheel.transform.localRotation;
 
-        rotationAmount = Mathf.Clamp(rotationAmount,-100,100);
+        rotationLimit = Mathf.Clamp(rotationLimit,-100,100);
         if (input>0 || input <0)
         {
-            forcePos.transform.localRotation=Quaternion.Euler(0, rotationAmount, 0);
+            forcePos.transform.localRotation = Quaternion.Euler(0, rotationLimit, 0);
+        }
+
+        else
+        {
+            forcePos.transform.localRotation = Quaternion.Euler(0, 0, 0);
         }
 
         var rot_y = Quaternion.Euler(-90, forceRot.y+90, 0);
-        wheel.transform.rotation=rot_y;
+        wheel.transform.localRotation=rot_y;
     }
 
     void WheelAnimation()
@@ -110,7 +124,7 @@ public class CarPhysics : MonoBehaviour
         }
     }
 
-    void SideFriction(Transform forcePos, GameObject wheel)
+    void HorizontalFriction(Transform forcePos)
     {
         if (Physics.Raycast(forcePos.position, -transform.up, out hitInfo, suspensionRestDist, layers))
         {
@@ -125,9 +139,8 @@ public class CarPhysics : MonoBehaviour
         }
     }
 
-    void Acceleration(Transform forcePos, GameObject wheel)
+    void VerticalFriction(Transform forcePos)
     {
-        float input = PlayerController.inputVert;
         if (Physics.Raycast(forcePos.position, -transform.up, out hitInfo, suspensionRestDist, layers))
         {
             Vector3 accelDir = -forcePos.forward;
@@ -139,6 +152,15 @@ public class CarPhysics : MonoBehaviour
             float accel = velChange / Time.fixedDeltaTime;
 
             rb.AddForceAtPosition(accelDir * accel, forcePos.position);
+        }
+    }
+
+    void Acceleration(Transform forcePos)
+    {
+        float input = PlayerController.inputVert;
+        if (Physics.Raycast(forcePos.position, -transform.up, out hitInfo, suspensionRestDist, layers))
+        {
+            Vector3 accelDir = -forcePos.forward;
 
             //Acceleration
             if (input>0f || input<0f)

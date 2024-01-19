@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frames
     void Update()
     {
-        inputVert = Input.GetAxis("Vertical")*power;
+        inputVert = Input.GetAxis("Vertical")*power*10;
         inputHor = Input.GetAxis("Horizontal")*turnAmount*10;
     }
 

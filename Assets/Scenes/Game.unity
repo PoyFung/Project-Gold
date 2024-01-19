@@ -4339,7 +4339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 4437498023699281960}
-  power: 2500
+  power: 250
   turnAmount: 100
 --- !u!114 &4437498023699281962
 MonoBehaviour:
