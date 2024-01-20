@@ -84,7 +84,6 @@ public class CarPhysics : MonoBehaviour
         float input = PlayerController.inputHor;
         float rotationLimit = input * Time.deltaTime;
         var forceRot = forcePos.localEulerAngles;
-        var orgWheelRot = wheel.transform.localRotation;
 
         rotationLimit = Mathf.Clamp(rotationLimit,-20,20);
         if (input>0 || input <0)
@@ -104,6 +103,12 @@ public class CarPhysics : MonoBehaviour
     void WheelAnimation()
     {
 
+    }
+    void DebugFunction(Transform forcePos)
+    {
+        Debug.DrawRay(forcePos.position, -forcePos.forward, Color.blue);
+        Debug.DrawRay(forcePos.position, forcePos.up, Color.green);
+        Debug.DrawRay(forcePos.position, -forcePos.right, Color.red);
     }
 
     void Suspension(Transform forcePos,GameObject wheel)
@@ -171,12 +176,5 @@ public class CarPhysics : MonoBehaviour
                 rb.AddForceAtPosition(accelDir * torque, forcePos.position);
             }
         }
-    }
-
-    void DebugFunction(Transform forcePos)
-    {
-        Debug.DrawLine(forcePos.position, new Vector3(forcePos.rotation.x+forcePos.position.x+1, forcePos.position.y, forcePos.position.z), Color.red);
-        Debug.DrawLine(forcePos.position, new Vector3(forcePos.position.x, forcePos.position.y+1, forcePos.position.z), Color.green);
-        Debug.DrawLine(forcePos.position, new Vector3(forcePos.position.x, forcePos.position.y, forcePos.position.z + 1), Color.blue);
     }
 }

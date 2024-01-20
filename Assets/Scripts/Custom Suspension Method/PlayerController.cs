@@ -26,21 +26,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Accelerate();
-        //Rotate();
-    }
-
-    void Accelerate()
-    {
-        player.AddForce(player.transform.forward*inputVert, ForceMode.Force);
-    }
-
-    void Rotate()
-    {
-        float rotationAmount = inputHor * Time.deltaTime * turnAmount;
-        Quaternion deltaRotation = Quaternion.Euler(0f, rotationAmount, 0f);
-
-        Quaternion targetRotation = player.rotation * deltaRotation;
-        player.MoveRotation(Quaternion.Slerp(player.rotation, targetRotation, 0.1f));
+        
     }
 }
