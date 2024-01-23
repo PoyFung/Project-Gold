@@ -100,7 +100,7 @@ public class CarPhysics : MonoBehaviour
         wheel.transform.localRotation= rot_y;
     }
 
-    void WheelAnimation()
+    void WheelAnimation(GameObject wheel)
     {
 
     }
