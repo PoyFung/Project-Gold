@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Camera : MonoBehaviour
+public class CamMovement : MonoBehaviour
 {
     public Transform frontFace;
     public Transform backFace;
