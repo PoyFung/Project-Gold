@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Selectable : MonoBehaviour
 {
+    public GameObject raceScreen;
+
     private Transform highlight;
     private Transform selection;
     private RaycastHit mouseInfo;
@@ -45,8 +47,7 @@ public class Selectable : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     Debug.Log("Clicked!");
-                    //SceneManager.LoadScene("Test Room");
-
+                    raceScreen.SetActive(true);
                     Time.timeScale = 0;
 
                 }
