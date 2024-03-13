@@ -49,7 +49,6 @@ public class Selectable : MonoBehaviour
                     Debug.Log("Clicked!");
                     raceScreen.SetActive(true);
                     Time.timeScale = 0;
-
                 }
             }
         }
