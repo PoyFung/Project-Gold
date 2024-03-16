@@ -17,6 +17,11 @@ public class MenuSelect : MonoBehaviour
         SceneManager.LoadScene("Start Menu");
     }
 
+    public void hubRoom()
+    {
+        SceneManager.LoadScene("Hub Room");
+    }
+
     public void testRoom()
     {
         SceneManager.LoadScene("Test Room");
