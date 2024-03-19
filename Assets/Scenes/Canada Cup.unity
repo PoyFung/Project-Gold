@@ -2341,7 +2341,6 @@ GameObject:
   - component: {fileID: 1028616068}
   - component: {fileID: 1028616067}
   - component: {fileID: 1028616066}
-  - component: {fileID: 1028616065}
   - component: {fileID: 1028616064}
   m_Layer: 0
   m_Name: Kart AI
@@ -2377,21 +2376,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1028616065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028616063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 017b655d94f169f49b73a1d330cfac1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1028616064}
-  power: 500
-  turnAmount: 25
 --- !u!114 &1028616066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2476,10 +2460,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7de855757f51764fac792bba053534d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FRPos: {fileID: 601721855}
+  FLPos: {fileID: 1101972761}
+  BRPos: {fileID: 685632677}
+  BLPos: {fileID: 1999689184}
+  frontRightWheel: {fileID: 162363268}
+  frontLeftWheel: {fileID: 1022012929}
   waypointContainer: {fileID: 71702192}
   waypoints: []
   currentWaypoint: 0
   waypointDist: 25
+  power: 500
+  turnAmount: 25
 --- !u!4 &1028616068
 Transform:
   m_ObjectHideFlags: 0
@@ -3490,9 +3482,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1368068354}
-  - component: {fileID: 1368068355}
-  - component: {fileID: 1368068353}
   - component: {fileID: 1368068352}
+  - component: {fileID: 1368068353}
   - component: {fileID: 1368068351}
   m_Layer: 0
   m_Name: Kart V1.2
@@ -3500,7 +3491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &1368068351
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3540,9 +3531,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017b655d94f169f49b73a1d330cfac1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1368068351}
-  power: 250
-  turnAmount: 40
+  FRPos: {fileID: 2062205557}
+  FLPos: {fileID: 478820139}
+  BRPos: {fileID: 1559898827}
+  BLPos: {fileID: 987302526}
+  frontRightWheel: {fileID: 1523030063}
+  frontLeftWheel: {fileID: 1405255241}
+  power: 500
+  turnAmount: 10
 --- !u!114 &1368068353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3631,18 +3627,6 @@ Transform:
   - {fileID: 852040862}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1368068355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368068350}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac3302c80fb1d934193d64735e8c0b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1374672866
 GameObject:
   m_ObjectHideFlags: 0

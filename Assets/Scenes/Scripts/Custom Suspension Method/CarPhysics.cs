@@ -67,14 +67,6 @@ public class CarPhysics : MonoBehaviour
         VerticalFriction(BRPos);
         VerticalFriction(BLPos);
 
-        Acceleration(FRPos);
-        Acceleration(FLPos);
-        Acceleration(BRPos);
-        Acceleration(BLPos);
-
-        Steering(FRPos,frontRightWheel);
-        Steering(FLPos,frontLeftWheel);
-
         DebugFunction(FRPos);
         DebugFunction(FLPos);
         DebugFunction(BRPos);
@@ -83,9 +75,8 @@ public class CarPhysics : MonoBehaviour
         rbVelocity = rb.velocity.magnitude;
     }
 
-    void Steering(Transform forcePos, GameObject wheel)
+    public void Steering(Transform forcePos, GameObject wheel,float input)
     {
-        float input = PlayerController.inputHor;
         float rotationLimit = input * Time.deltaTime;
         var forceRot = forcePos.localEulerAngles;
 
@@ -102,6 +93,23 @@ public class CarPhysics : MonoBehaviour
 
         var rot_y = Quaternion.Euler(-90, forceRot.y+90, 0);
         wheel.transform.localRotation= rot_y;
+    }
+
+    public void Acceleration(Transform forcePos,float input)
+    {
+        if (Physics.Raycast(forcePos.position, -transform.up, out hitInfo, suspensionRestDist, layers))
+        {
+            Vector3 accelDir = -forcePos.forward;
+
+            //Acceleration
+            if (input > 0f || input < 0f)
+            {
+                float speed = Vector3.Dot(kartFrame.forward, rb.velocity);
+                float normSpeed = Mathf.Clamp01(Mathf.Abs(speed) / maxSpeed);
+                float torque = powerCurve.Evaluate(normSpeed) * input;
+                rb.AddForceAtPosition(accelDir * torque, forcePos.position);
+            }
+        }
     }
 
     void WheelAnimation(GameObject wheel)
@@ -161,24 +169,6 @@ public class CarPhysics : MonoBehaviour
             float accel = velChange / Time.fixedDeltaTime;
 
             rb.AddForceAtPosition(accelDir * accel, forcePos.position);
-        }
-    }
-
-    void Acceleration(Transform forcePos)
-    {
-        float input = PlayerController.inputVert;
-        if (Physics.Raycast(forcePos.position, -transform.up, out hitInfo, suspensionRestDist, layers))
-        {
-            Vector3 accelDir = -forcePos.forward;
-
-            //Acceleration
-            if (input>0f || input<0f)
-            {
-                float speed = Vector3.Dot(kartFrame.forward, rb.velocity);
-                float normSpeed = Mathf.Clamp01(Mathf.Abs(speed) / maxSpeed);
-                float torque = powerCurve.Evaluate(normSpeed) * input;
-                rb.AddForceAtPosition(accelDir * torque, forcePos.position);
-            }
         }
     }
 

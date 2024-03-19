@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class CPU : MonoBehaviour
 {
-    //[SerializeField] private Transform targetPosTransform;
+    public Transform FRPos;
+    public Transform FLPos;
+    public Transform BRPos;
+    public Transform BLPos;
+
+    public GameObject frontRightWheel;
+    public GameObject frontLeftWheel;
+
     public Waypoint waypointContainer;
     public List<Transform> waypoints;
     public int currentWaypoint;
 
-    private PlayerController controller;
+    private CarPhysics carPhysics;
     private Vector3 targetPosition;
 
     public float waypointDist;
 
+    public float power = 10;
+    public float turnAmount = 10;
+
+    private float inputVert;
+    private float inputHor;
+
     private void Awake()
     {
-        controller = GetComponent<PlayerController>();
+        carPhysics = GetComponent<CarPhysics>();
     }
 
     private void Start()
@@ -37,31 +50,46 @@ public class CPU : MonoBehaviour
             }
         }
         Debug.DrawRay(transform.position, waypoints[currentWaypoint].position-transform.position,Color.yellow);
+
+        float currentDist = Vector3.Distance(waypoints[currentWaypoint].position,transform.position);
+        Debug.Log(currentDist);
+
         float forwardAmount = 0f;
-        float turnAmount = 0f;
+        float turnDir = 0f;
 
         Vector3 dirToMovePosition = (targetPosition - transform.position).normalized;
         float dot = Vector3.Dot(transform.forward, dirToMovePosition);
 
-        Debug.Log(dot);
+        //Debug.Log(dot);
         forwardAmount = 1f;
 
         float angleToDir = Vector3.SignedAngle(transform.forward, dirToMovePosition, Vector3.up);
-        Debug.Log(angleToDir);
+        //Debug.Log(angleToDir);
 
         if (angleToDir>0)
         {
-            turnAmount = -1f;
+            turnDir = -1f;
         }
 
         else
         {
-            turnAmount = 1f;
+            turnDir = 1f;
         }
 
-        PlayerController.getInputVert = forwardAmount;
-        PlayerController.getInputHor = turnAmount;
+        inputVert = forwardAmount * power * 10;
+        inputHor = turnDir * turnAmount * 10;
 
+    }
+
+    public void FixedUpdate()
+    {
+        carPhysics.Steering(FRPos, frontRightWheel, inputHor);
+        carPhysics.Steering(FLPos, frontLeftWheel, inputHor);
+
+        carPhysics.Acceleration(FRPos, inputVert);
+        carPhysics.Acceleration(FLPos, inputVert);
+        carPhysics.Acceleration(BRPos, inputVert);
+        carPhysics.Acceleration(BLPos, inputVert);
     }
 
     public void SetTargetPosition(Vector3 targetPosition)
