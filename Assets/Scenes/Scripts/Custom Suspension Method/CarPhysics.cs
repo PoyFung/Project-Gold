@@ -19,6 +19,8 @@ public class CarPhysics : MonoBehaviour
     public float springStrength=100;
     public float springDamper=15;
 
+    public static float rbVelocity;
+
     [Range(0, 1)] public float tireGrip;
 
     public float maxSpeed = 10;
@@ -45,7 +47,7 @@ public class CarPhysics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void FixedUpdate()
@@ -77,6 +79,8 @@ public class CarPhysics : MonoBehaviour
         DebugFunction(FLPos);
         DebugFunction(BRPos);
         DebugFunction(BLPos);
+
+        rbVelocity = rb.velocity.magnitude;
     }
 
     void Steering(Transform forcePos, GameObject wheel)
@@ -175,6 +179,14 @@ public class CarPhysics : MonoBehaviour
                 float torque = powerCurve.Evaluate(normSpeed) * input;
                 rb.AddForceAtPosition(accelDir * torque, forcePos.position);
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.tag == "Finish Line")
+        {
+            GUI.currentLap += 1;
         }
     }
 }

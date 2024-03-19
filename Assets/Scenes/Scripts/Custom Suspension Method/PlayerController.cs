@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     public float power=10;
     public float turnAmount=10;
 
+    public static float getInputVert;
+    public static float getInputHor;
+
     public static float inputVert;
     public static float inputHor;
 
@@ -20,8 +23,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frames
     void Update()
     {
-        inputVert = Input.GetAxis("Vertical")*power*10;
-        inputHor = Input.GetAxis("Horizontal")*turnAmount*10;
+        inputVert = getInputVert*power*10;
+        inputHor = getInputHor*turnAmount*10;
     }
 
     private void FixedUpdate()
