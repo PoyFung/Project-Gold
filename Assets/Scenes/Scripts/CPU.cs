@@ -1,9 +1,14 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CPU : MonoBehaviour
 {
+    public static int Position;
+    public int currentPos;
+
     public Transform FRPos;
     public Transform FLPos;
     public Transform BRPos;
@@ -12,14 +17,16 @@ public class CPU : MonoBehaviour
     public GameObject frontRightWheel;
     public GameObject frontLeftWheel;
 
-    public Waypoint waypointContainer;
-    public List<Transform> waypoints;
+    public ObjectList waypointContainer;
+    public static List<Transform> waypoints;
     public int currentWaypoint;
 
     private CarPhysics carPhysics;
+
     private Vector3 targetPosition;
 
     public float waypointDist;
+    public float currentDist;
 
     public float power = 10;
     public float turnAmount = 10;
@@ -30,12 +37,14 @@ public class CPU : MonoBehaviour
     private void Awake()
     {
         carPhysics = GetComponent<CarPhysics>();
+        waypoints = waypointContainer.list;
+        currentWaypoint = 0;
+        currentPos = Position;
     }
 
     private void Start()
     {
-        waypoints=waypointContainer.waypoints;
-        currentWaypoint=0;
+        currentDist = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
     }
 
     private void Update()
@@ -51,7 +60,7 @@ public class CPU : MonoBehaviour
         }
         Debug.DrawRay(transform.position, waypoints[currentWaypoint].position-transform.position,Color.yellow);
 
-        float currentDist = Vector3.Distance(waypoints[currentWaypoint].position,transform.position);
+        //float currentDist = Vector3.Distance(waypoints[currentWaypoint].position,transform.position);
         Debug.Log(currentDist);
 
         float forwardAmount = 0f;

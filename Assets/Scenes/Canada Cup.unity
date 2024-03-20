@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8332b15e3bbfecc4ba5f0425b491423b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoints: []
+  list: []
 --- !u!1 &76383701
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,6 +2022,69 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &773140720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 773140721}
+  - component: {fileID: 773140724}
+  - component: {fileID: 773140723}
+  m_Layer: 0
+  m_Name: All Karts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &773140721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773140720}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 618.7776, y: 141.80945, z: -257.09882}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1368068354}
+  - {fileID: 1028616068}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &773140723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773140720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e93a2cc87d33c244b5fc44ac18ba0f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kartsContainer: {fileID: 773140724}
+  kartList: []
+  wayList: []
+--- !u!114 &773140724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773140720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8332b15e3bbfecc4ba5f0425b491423b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  list: []
 --- !u!1 &827753821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,6 +2523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7de855757f51764fac792bba053534d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPos: 0
   FRPos: {fileID: 601721855}
   FLPos: {fileID: 1101972761}
   BRPos: {fileID: 685632677}
@@ -2467,9 +2531,9 @@ MonoBehaviour:
   frontRightWheel: {fileID: 162363268}
   frontLeftWheel: {fileID: 1022012929}
   waypointContainer: {fileID: 71702192}
-  waypoints: []
   currentWaypoint: 0
   waypointDist: 25
+  currentDist: 0
   power: 500
   turnAmount: 25
 --- !u!4 &1028616068
@@ -2481,12 +2545,12 @@ Transform:
   m_GameObject: {fileID: 1028616063}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.70710784, z: -0, w: 0.70710576}
-  m_LocalPosition: {x: 293.4, y: 218.7, z: -450.2}
+  m_LocalPosition: {x: -325.3776, y: 76.89055, z: -193.1012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1868705839}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 773140721}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1083136079
 GameObject:
@@ -3491,7 +3555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!54 &1368068351
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3619,13 +3683,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368068350}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.70710784, z: 0, w: 0.70710576}
-  m_LocalPosition: {x: 293.4, y: 218.7, z: -432.9}
+  m_LocalRotation: {x: -0, y: 0.70710784, z: -0, w: 0.70710576}
+  m_LocalPosition: {x: -325.3776, y: 76.89055, z: -175.80118}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 852040862}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 773140721}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1374672866
 GameObject:
@@ -5699,7 +5763,6 @@ SceneRoots:
   - {fileID: 42020787}
   - {fileID: 1374672868}
   - {fileID: 827753822}
-  - {fileID: 1368068354}
-  - {fileID: 1028616068}
+  - {fileID: 773140721}
   - {fileID: 543450652813307430}
   - {fileID: 1870014980}
