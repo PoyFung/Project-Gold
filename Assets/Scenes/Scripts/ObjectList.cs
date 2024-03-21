@@ -8,16 +8,8 @@ public class ObjectList : MonoBehaviour
 
     private void Awake()
     {
-        /*
-        foreach (Transform tr in gameObject.GetComponentsInChildren<Transform>())
-        {
-            list.Add(tr);
-        }
-        list.Remove(list[0]);
-        */
         list = new List<Transform>();
 
-        // Iterate over immediate children
         for (int i = 0; i < transform.childCount; i++)
         {
             Transform child = transform.GetChild(i);

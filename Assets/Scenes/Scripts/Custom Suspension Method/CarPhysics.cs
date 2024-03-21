@@ -171,12 +171,4 @@ public class CarPhysics : MonoBehaviour
             rb.AddForceAtPosition(accelDir * accel, forcePos.position);
         }
     }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (collision.tag == "Finish Line")
-        {
-            GUI.currentLap += 1;
-        }
-    }
 }

@@ -6,8 +6,7 @@ using UnityEngine.UIElements;
 
 public class CPU : MonoBehaviour
 {
-    public static int Position;
-    public int currentPos;
+    public int Position;
 
     public Transform FRPos;
     public Transform FLPos;
@@ -25,8 +24,9 @@ public class CPU : MonoBehaviour
 
     private Vector3 targetPosition;
 
-    public float waypointDist;
-    public float currentDist;
+    public float waypointDistDetection;
+    public int passedWaypoints;
+    public float distFromWaypoint;
 
     public float power = 10;
     public float turnAmount = 10;
@@ -39,29 +39,18 @@ public class CPU : MonoBehaviour
         carPhysics = GetComponent<CarPhysics>();
         waypoints = waypointContainer.list;
         currentWaypoint = 0;
-        currentPos = Position;
     }
 
     private void Start()
     {
-        currentDist = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
+        distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
     }
 
-    private void Update()
+    void Update()
     {
-        SetTargetPosition(waypoints[currentWaypoint].position);
-        if (Vector3.Distance(waypoints[currentWaypoint].position, transform.position)<waypointDist)
-        {
-            currentWaypoint++;
-            if(currentWaypoint==waypoints.Count)
-            {
-                currentWaypoint = 0;
-            }
-        }
-        Debug.DrawRay(transform.position, waypoints[currentWaypoint].position-transform.position,Color.yellow);
-
-        //float currentDist = Vector3.Distance(waypoints[currentWaypoint].position,transform.position);
-        Debug.Log(currentDist);
+        DistToWaypoint();
+        distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position,transform.position);
+        //Debug.Log(distFromWaypoint);
 
         float forwardAmount = 0f;
         float turnDir = 0f;
@@ -99,6 +88,21 @@ public class CPU : MonoBehaviour
         carPhysics.Acceleration(FLPos, inputVert);
         carPhysics.Acceleration(BRPos, inputVert);
         carPhysics.Acceleration(BLPos, inputVert);
+    }
+
+    public void DistToWaypoint()
+    {
+        SetTargetPosition(waypoints[currentWaypoint].position);
+        if (Vector3.Distance(waypoints[currentWaypoint].position, transform.position) < waypointDistDetection)
+        {
+            currentWaypoint++;
+            passedWaypoints++;
+            if (currentWaypoint == waypoints.Count)
+            {
+                currentWaypoint = 0;
+            }
+        }
+        Debug.DrawRay(transform.position, waypoints[currentWaypoint].position - transform.position, Color.yellow);
     }
 
     public void SetTargetPosition(Vector3 targetPosition)
