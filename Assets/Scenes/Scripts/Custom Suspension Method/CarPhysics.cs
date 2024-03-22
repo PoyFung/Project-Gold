@@ -119,8 +119,8 @@ public class CarPhysics : MonoBehaviour
     void DebugFunction(Transform forcePos)
     {
         Debug.DrawRay(forcePos.position, -forcePos.forward, Color.blue);
-        Debug.DrawRay(forcePos.position, forcePos.up, Color.green);
-        Debug.DrawRay(forcePos.position, -forcePos.right, Color.red);
+        //Debug.DrawRay(forcePos.position, forcePos.up, Color.red);
+        Debug.DrawRay(forcePos.position, -forcePos.right, Color.green);
     }
 
     void Suspension(Transform forcePos,GameObject wheel)
@@ -136,7 +136,7 @@ public class CarPhysics : MonoBehaviour
 
             rb.AddForceAtPosition(springForceDir*totalForce, forcePos.position);
 
-            Debug.DrawLine(forcePos.position, wheel.transform.position, Color.red);
+            Debug.DrawLine(forcePos.position, hitInfo.point, Color.red);
             wheel.transform.position = hitInfo.point + transform.up;
         }
     }
