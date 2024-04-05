@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Hub Room.unity
     guid: 9e78302e42e968a45a45605f9631cb40
   - enabled: 1
+    path: Assets/Scenes/Canada Cup.unity
+    guid: 24c011403f11fea478f6bb584df43164
+  - enabled: 1
     path: Assets/Scenes/Test Room.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

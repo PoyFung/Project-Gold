@@ -37,7 +37,7 @@ public class CarPhysics : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
-
+        Time.timeScale = 1;
     }
     void Start()
     {

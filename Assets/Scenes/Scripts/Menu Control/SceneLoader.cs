@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum MenuState
+public class SceneLoader : MonoBehaviour
 {
-    Options,
-    TimeTrial
-}
-
-public class MenuSelect : MonoBehaviour
-{
-    public MenuState currentState;
     public void startMenu()
     {
         SceneManager.LoadScene("Start Menu");
@@ -24,6 +17,6 @@ public class MenuSelect : MonoBehaviour
 
     public void testRoom()
     {
-        SceneManager.LoadScene("Test Room");
+        SceneManager.LoadSceneAsync("Test Room");
     }
 }

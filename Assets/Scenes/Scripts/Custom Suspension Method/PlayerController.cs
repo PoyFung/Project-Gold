@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
+        distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
     }
 
     // Update is called once per frames
@@ -49,8 +49,8 @@ public class PlayerController : MonoBehaviour
     {
         inputVert = Input.GetAxis("Vertical") * power * 10;
         inputHor = Input.GetAxis("Horizontal") * turnAmount*10;
-        //distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
-        //DistToWaypoint();
+        distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
+        DistToWaypoint();
     }
 
     private void FixedUpdate()

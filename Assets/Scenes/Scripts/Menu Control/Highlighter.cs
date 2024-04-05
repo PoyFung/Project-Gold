@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class Selectable : MonoBehaviour
+public class Highlighter : MonoBehaviour
 {
-    public GameObject raceScreen;
-
     private Transform highlight;
     private Transform selection;
     private RaycastHit mouseInfo;
@@ -47,7 +45,7 @@ public class Selectable : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     Debug.Log("Clicked!");
-                    raceScreen.SetActive(true);
+                    MenuNavigation.currentState = MenuState.Mode;
                     Time.timeScale = 0;
                 }
             }

@@ -20,6 +20,7 @@ public class Standings : MonoBehaviour
     // Start is called before the first frame update
     private void Awake()
     {
+        Time.timeScale = 1;
         kartList = new List<kart>();
         for (int i = 0; i < transform.childCount; i++)
         {
