@@ -13,7 +13,7 @@ public class GUI : MonoBehaviour
 
     private PlayerController playerController;
 
-    public static float currentLap = 1;
+    public static float currentLap = 0;
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,7 +24,21 @@ public class GUI : MonoBehaviour
     void Update()
     {
         speed.text = "Speed: " + CarPhysics.rbVelocity.ToString("0.00");
-        lap.text = "Lap: " + currentLap.ToString() + "/3";
+        if (currentLap == 0)
+        {
+            lap.text = "Lap: 1/3";
+        }
+
+        else
+        {
+            lap.text = "Lap: " + currentLap.ToString() + "/3";
+        }
+
+        if (currentLap == 2)
+        {
+            GameNavigation.OnRaceFinish();
+            Standings.GetFinalStandings();
+        }
         position.text = "Pos: " + Pos.ToString();
     }
 }

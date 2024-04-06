@@ -50,7 +50,6 @@ public class CPU : MonoBehaviour
     {
         DistToWaypoint();
         distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position,transform.position);
-        //Debug.Log(distFromWaypoint);
 
         float forwardAmount = 0f;
         float turnDir = 0f;
@@ -58,11 +57,9 @@ public class CPU : MonoBehaviour
         Vector3 dirToMovePosition = (targetPosition - transform.position).normalized;
         float dot = Vector3.Dot(transform.forward, dirToMovePosition);
 
-        //Debug.Log(dot);
         forwardAmount = 1f;
 
         float angleToDir = Vector3.SignedAngle(transform.forward, dirToMovePosition, Vector3.up);
-        //Debug.Log(angleToDir);
 
         if (angleToDir>0)
         {

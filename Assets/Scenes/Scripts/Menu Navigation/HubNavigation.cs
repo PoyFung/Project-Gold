@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum MenuState
+public enum HubState
 {
     Hub,
     Mode,
@@ -12,9 +12,9 @@ public enum MenuState
     GrandPrix
 }
 
-public class MenuNavigation : MonoBehaviour
+public class HubNavigation : MonoBehaviour
 {
-    public static MenuState currentState;
+    public static HubState currentState;
 
     public GameObject modeMenu;
     public GameObject grandPrixMenu;
@@ -22,7 +22,7 @@ public class MenuNavigation : MonoBehaviour
 
     private void Awake()
     {
-        currentState = MenuState.Hub;
+        currentState = HubState.Hub;
     }
 
     // Start is called before the first frame update
@@ -36,19 +36,19 @@ public class MenuNavigation : MonoBehaviour
     {
         switch (currentState)
         {
-            case MenuState.Mode:
+            case HubState.Mode:
                 modeMenu.SetActive(true);
                 timeTrialMenu.SetActive(false);
                 grandPrixMenu.SetActive(false);
                 break;
 
-            case MenuState.TimeTrial:
+            case HubState.TimeTrial:
                 modeMenu.SetActive(false);
                 timeTrialMenu.SetActive(true);
                 grandPrixMenu.SetActive(false);
                 break;
 
-            case MenuState.GrandPrix:
+            case HubState.GrandPrix:
                 modeMenu.SetActive(false);
                 timeTrialMenu.SetActive(false);
                 grandPrixMenu.SetActive(true);
@@ -58,22 +58,21 @@ public class MenuNavigation : MonoBehaviour
 
     public void OnGrandPrix()
     {
-        currentState = MenuState.GrandPrix;
+        currentState = HubState.GrandPrix;
     }
 
     public void OnTimeTrial()
     {
-        currentState = MenuState.TimeTrial;
+        currentState = HubState.TimeTrial;
     }
 
     public void OnBack()
     {
-        currentState = MenuState.Mode;
+        currentState = HubState.Mode;
     }
 
     public void OnCanadaCup()
     {
-        SceneManager.LoadSceneAsync("Canada Cup", LoadSceneMode.Single);
-        SceneManager.UnloadSceneAsync("Hub Room");
+        SceneManager.LoadScene("Canada Cup");
     }
 }

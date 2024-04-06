@@ -45,7 +45,7 @@ public class Highlighter : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     Debug.Log("Clicked!");
-                    MenuNavigation.currentState = MenuState.Mode;
+                    HubNavigation.currentState = HubState.Mode;
                     Time.timeScale = 0;
                 }
             }

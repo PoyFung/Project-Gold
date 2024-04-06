@@ -8,6 +8,7 @@ using UnityEngine;
 public class kart
 {
     [SerializeField]
+    public int position;
     public PlayerController playerKart=null;
     public CPU cpuKart=null;
     public int numWay;
@@ -15,7 +16,8 @@ public class kart
 }
 public class Standings : MonoBehaviour
 {
-    public List<kart> kartList;
+    public static List<kart> kartList;
+    public static List<int> finalStands;
 
     // Start is called before the first frame update
     private void Awake()
@@ -51,7 +53,7 @@ public class Standings : MonoBehaviour
 
     void Start()
     {
-        
+        //GameEvents.current.onFinishRace += GetFinalStandings;
     }
 
     // Update is called once per frame
@@ -75,7 +77,8 @@ public class Standings : MonoBehaviour
                            .ToList();
 
                 currentKart.Position = kartList.IndexOf(kartList[i])+1;
-                GUI.Pos = kartList.IndexOf(kartList[i]) + 1;
+                kartList[i].position = currentKart.Position;
+                GUI.Pos = kartList[i].position;
             }
 
             else if (kartList[i].cpuKart != null)
@@ -88,7 +91,17 @@ public class Standings : MonoBehaviour
                            .SelectMany(group => group.OrderBy(kart => kart.dist))
                            .ToList();
                 currentKart.Position = kartList.IndexOf(kartList[i])+1;
+                kartList[i].position=currentKart.Position;
             }
+        }
+    }
+
+    public static void GetFinalStandings()
+    {
+        finalStands = new List<int>();
+        for (int i = 0; i < kartList.Count; i++)
+        {
+            finalStands[i] = kartList[i].position;
         }
     }
 }
