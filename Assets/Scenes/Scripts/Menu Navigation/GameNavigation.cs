@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -10,21 +11,16 @@ public enum GameState
 {
     GUI,
     Pause,
-    Finish
-}
-
-public class RacerResult
-{
-    TextMeshProUGUI pos;
-    TextMeshProUGUI name;
-    TextMeshProUGUI points;
+    Finish,
 }
 public class GameNavigation : MonoBehaviour
 {
-    public ObjectList PositionRacerResults;
+    public ObjectList Positions;
     public List<Transform> RacerResults;
     public Stopwatch timer = new Stopwatch();
     public static GameState currentState;
+
+    public bool hasRun = false;
 
     public GameObject GUI;
     public GameObject pause;
@@ -32,13 +28,14 @@ public class GameNavigation : MonoBehaviour
 
     private void Awake()
     {
+        RacerResults = Positions.list;
         currentState = GameState.GUI;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        RacerResults = PositionRacerResults.list;
+        
     }
 
     // Update is called once per frame
@@ -88,9 +85,18 @@ public class GameNavigation : MonoBehaviour
 
     public void resultScreenTransitions()
     {
-        for (int i=0; i < Standings.finalStands.Count; i++)
+        if (hasRun == false)
         {
-            
+            for (int i = 0; i < Standings.finalStands.Count; i++)
+            {
+                TextMeshProUGUI pos = RacerResults[i].transform.Find("Position Num").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI name = RacerResults[i].transform.Find("Racer Name").GetComponent<TextMeshProUGUI>();
+                //TextMeshProUGUI points = RacerResults[i].transform.Find("Points").GetComponent<TextMeshProUGUI>();
+
+                pos.text = Standings.finalStands[i].position.ToString();
+                name.text = Standings.finalStands[i].name;
+            }
+            hasRun = true;
         }
 
         timer.Start();
@@ -101,7 +107,11 @@ public class GameNavigation : MonoBehaviour
         if (timer.Elapsed.TotalSeconds >= 3)
         {
             finishText.gameObject.SetActive(false);
-
+            panel.gameObject.SetActive(true);
+            for (int i = 0; i < Standings.finalStands.Count; i++)
+            {
+                RacerResults[i].gameObject.SetActive(true);
+            }
         }
     }
 }

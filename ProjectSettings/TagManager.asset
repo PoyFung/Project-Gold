@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Selectable
   - Finish Line
+  - Waypoint
   layers:
   - Default
   - TransparentFX

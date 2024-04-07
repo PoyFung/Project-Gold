@@ -8,6 +8,7 @@ using UnityEngine;
 public class kart
 {
     [SerializeField]
+    public string name;
     public int position;
     public PlayerController playerKart=null;
     public CPU cpuKart=null;
@@ -17,12 +18,13 @@ public class kart
 public class Standings : MonoBehaviour
 {
     public static List<kart> kartList;
-    public static List<int> finalStands;
+    public static List<kart> finalStands;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        Time.timeScale = 1;
+        int playerRacerNum = 1;
+        int cpuRacerNum = 1;
         kartList = new List<kart>();
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -32,6 +34,7 @@ public class Standings : MonoBehaviour
             if (childTrans.GetComponent<PlayerController>() != null)
             {
                 PlayerController childPlayer = childTrans.GetComponent<PlayerController>();
+                newKart.name = ("Player "+playerRacerNum.ToString());
                 newKart.playerKart = childPlayer;
                 newKart.dist = childPlayer.distFromWaypoint;
                 newKart.numWay = childPlayer.passedWaypoints;
@@ -42,12 +45,15 @@ public class Standings : MonoBehaviour
             else if (childTrans.GetComponent<CPU>()!=null)
             {
                 CPU childCPU = childTrans.GetComponent<CPU>();
+                newKart.name = ("CPU " + cpuRacerNum.ToString());
                 newKart.cpuKart = childCPU;
                 newKart.dist = childCPU.distFromWaypoint;
                 newKart.numWay = childCPU.passedWaypoints;
                 kartList.Add(newKart);
                 childCPU.Position = i + 1;
             }
+            playerRacerNum++;
+            cpuRacerNum++;
         }
     }
 
@@ -98,10 +104,10 @@ public class Standings : MonoBehaviour
 
     public static void GetFinalStandings()
     {
-        finalStands = new List<int>();
+        finalStands = new List<kart>();
         for (int i = 0; i < kartList.Count; i++)
         {
-            finalStands[i] = kartList[i].position;
+            finalStands.Add(kartList[i]);
         }
     }
 }

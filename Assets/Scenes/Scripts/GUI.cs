@@ -10,10 +10,11 @@ public class GUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI position;
 
     public static int Pos;
+    public static bool hasRun = false;
 
     private PlayerController playerController;
 
-    public static float currentLap = 0;
+    public static float currentLap = 1;
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,20 +25,13 @@ public class GUI : MonoBehaviour
     void Update()
     {
         speed.text = "Speed: " + CarPhysics.rbVelocity.ToString("0.00");
-        if (currentLap == 0)
-        {
-            lap.text = "Lap: 1/3";
-        }
+        lap.text = "Lap: " + currentLap.ToString() + "/3";
 
-        else
-        {
-            lap.text = "Lap: " + currentLap.ToString() + "/3";
-        }
-
-        if (currentLap == 2)
+        if (currentLap == 3 && hasRun == false)
         {
             GameNavigation.OnRaceFinish();
             Standings.GetFinalStandings();
+            hasRun = true;
         }
         position.text = "Pos: " + Pos.ToString();
     }

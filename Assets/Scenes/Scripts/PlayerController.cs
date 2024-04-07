@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public float waypointDistDetection;
     public int passedWaypoints;
     public float distFromWaypoint;
+    public int countWaypoint;
 
     public GameObject frontRightWheel;
     public GameObject frontLeftWheel;
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             currentWaypoint++;
             passedWaypoints++;
+            countWaypoint++;
             if (currentWaypoint == waypoints.Count)
             {
                 currentWaypoint = 0;
@@ -86,9 +89,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.tag == "Finish Line")
+        if (collision.tag == "Finish Line" && countWaypoint == waypoints.Count)
         {
             GUI.currentLap += 1;
+            countWaypoint = 0;
         }
     }
 }
