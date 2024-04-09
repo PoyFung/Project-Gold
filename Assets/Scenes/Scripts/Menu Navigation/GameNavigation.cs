@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -11,6 +12,7 @@ public enum GameState
 {
     GUI,
     Pause,
+    Settings,
     Finish,
 }
 public class GameNavigation : MonoBehaviour
@@ -24,6 +26,7 @@ public class GameNavigation : MonoBehaviour
 
     public GameObject GUI;
     public GameObject pause;
+    public GameObject settings;
     public GameObject results;
 
     private void Awake()
@@ -56,8 +59,14 @@ public class GameNavigation : MonoBehaviour
 
             case GameState.Pause:
                 Time.timeScale = 0;
+                AudioListener.volume = 0;
                 GUI.SetActive(false);
                 pause.SetActive(true);
+                break;
+
+            case GameState.Settings:
+                pause.SetActive(false);
+                settings.SetActive(true);
                 break;
 
             case GameState.Finish:
@@ -75,7 +84,13 @@ public class GameNavigation : MonoBehaviour
 
     public void OnResume()
     {
+        AudioListener.volume = 1;
         currentState = GameState.GUI;
+    }
+
+    public void OnSettings()
+    {
+        currentState = GameState.Settings;
     }
 
     public static void OnRaceFinish()
