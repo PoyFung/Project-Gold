@@ -73,7 +73,6 @@ public class GameNavigation : MonoBehaviour
                 GUI.SetActive(false);
                 resultScreenTransitions();
                 break;
-
         }
     }
 

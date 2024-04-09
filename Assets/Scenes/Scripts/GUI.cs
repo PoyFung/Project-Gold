@@ -24,7 +24,7 @@ public class GUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        speed.text = "Speed: " + CarPhysics.rbVelocity.ToString("0.00");
+        speed.text = "Speed: " + CarPhysics.rbVelocity.ToString("0");
         lap.text = "Lap: " + currentLap.ToString() + "/3";
 
         if (currentLap == 3 && hasRun == false)
