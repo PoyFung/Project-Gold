@@ -67,6 +67,11 @@ public class CarPhysics : MonoBehaviour
         VerticalFriction(BRPos);
         VerticalFriction(BLPos);
 
+        WheelAnimation(frontRightWheel);
+        WheelAnimation(frontLeftWheel);
+        WheelAnimation(backRightWheel);
+        WheelAnimation(backLeftWheel);
+
         DebugFunction(FRPos);
         DebugFunction(FLPos);
         DebugFunction(BRPos);
@@ -114,7 +119,8 @@ public class CarPhysics : MonoBehaviour
 
     void WheelAnimation(GameObject wheel)
     {
-
+        float rotationAngle = rb.velocity.magnitude * Time.deltaTime * Mathf.Rad2Deg;
+        wheel.transform.Rotate(Vector3.up, rotationAngle);
     }
     void DebugFunction(Transform forcePos)
     {
