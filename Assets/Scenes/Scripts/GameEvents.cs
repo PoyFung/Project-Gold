@@ -15,6 +15,8 @@ public class GameEvents : MonoBehaviour
 
     public static List<Rigidbody> kartListRB;
     public float timeLeft = 4;
+    public static Stopwatch timer = new Stopwatch();
+    public static float timePassed = 0;
 
     private void Awake()
     {
@@ -63,6 +65,8 @@ public class GameEvents : MonoBehaviour
             {
                 UnFreeze(rb);
             }
+            timer.Start();
+            timePassed = (float)timer.Elapsed.TotalSeconds;
         }
 
         if (timeLeft < 0)

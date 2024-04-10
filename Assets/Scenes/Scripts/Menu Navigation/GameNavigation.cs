@@ -18,7 +18,9 @@ public enum GameState
 public class GameNavigation : MonoBehaviour
 {
     public ObjectList Positions;
+    public ObjectList Times;
     public List<Transform> RacerResults;
+    public static List<Transform> TrialResults;
     public Stopwatch timer = new Stopwatch();
     public static GameState currentState;
 
@@ -31,14 +33,14 @@ public class GameNavigation : MonoBehaviour
 
     private void Awake()
     {
-        RacerResults = Positions.list;
         currentState = GameState.GUI;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        TrialResults = Times.list;
+        RacerResults = Positions.list;
     }
 
     // Update is called once per frame
@@ -99,7 +101,8 @@ public class GameNavigation : MonoBehaviour
 
     public void resultScreenTransitions()
     {
-        if (hasRun == false)
+        UnityEngine.Debug.Log(HubNavigation.currentState);
+        if (hasRun == false && HubNavigation.currentState == HubState.GrandPrix)
         {
             for (int i = 0; i < Standings.finalStands.Count; i++)
             {
@@ -113,6 +116,24 @@ public class GameNavigation : MonoBehaviour
             hasRun = true;
         }
 
+        else if (hasRun == false && HubNavigation.currentState == HubState.TimeTrial)
+        {
+            UnityEngine.Debug.Log(SaveVars.savedTimes.Count);
+            for (int i = 0; i < SaveVars.savedTimes.Count; i++)
+            {
+                TextMeshProUGUI pos = TrialResults[i].transform.Find("Position Num").GetComponent<TextMeshProUGUI>();
+                //TextMeshProUGUI name = RacerResults[i].transform.Find("Racer Name").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI time = TrialResults[i].transform.Find("Times").GetComponent<TextMeshProUGUI>();
+
+                pos.text = (i+1).ToString();
+                int minutes = Mathf.FloorToInt(SaveVars.savedTimes[i] / 60f);
+                int seconds = Mathf.FloorToInt(SaveVars.savedTimes[i] % 60f);
+
+                time.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+            }
+            hasRun = true;
+        }
+
         timer.Start();
         Transform finishText = results.transform.Find("Finish");
         Transform panel = results.transform.Find("Panel");
@@ -122,9 +143,20 @@ public class GameNavigation : MonoBehaviour
         {
             finishText.gameObject.SetActive(false);
             panel.gameObject.SetActive(true);
-            for (int i = 0; i < Standings.finalStands.Count; i++)
+            if (HubNavigation.currentState == HubState.GrandPrix)
             {
-                RacerResults[i].gameObject.SetActive(true);
+                for (int i = 0; i < Standings.finalStands.Count; i++)
+                {
+                    RacerResults[i].gameObject.SetActive(true);
+                }
+            }
+
+            else if (HubNavigation.currentState == HubState.TimeTrial)
+            {
+                for (int i = 0; i < SaveVars.savedTimes.Count; i++)
+                {
+                    TrialResults[i].gameObject.SetActive(true);
+                }
             }
         }
     }

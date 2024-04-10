@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class GUI : MonoBehaviour
 {
+    public GameObject positionObject;
+    public GameObject timeObject;
+
     [SerializeField] TextMeshProUGUI speed;
     [SerializeField] TextMeshProUGUI lap;
     [SerializeField] TextMeshProUGUI position;
+    [SerializeField] TextMeshProUGUI time;
 
     public static int Pos;
-    public static bool hasRun = false;
+    public bool hasRun = false;
 
     private PlayerController playerController;
 
@@ -18,7 +22,7 @@ public class GUI : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
+        Debug.Log(HubNavigation.currentState);
     }
 
     // Update is called once per frame
@@ -26,13 +30,30 @@ public class GUI : MonoBehaviour
     {
         speed.text = "Speed: " + CarPhysics.rbVelocity.ToString("0");
         lap.text = "Lap: " + currentLap.ToString() + "/3";
+        
+        if (HubNavigation.currentState == HubState.GrandPrix || HubNavigation.currentState == HubState.Hub)
+        {
+            positionObject.SetActive(true);
+            position.text = "Pos: " + Pos.ToString();
+        }
 
-        if (currentLap == 3 && hasRun == false)
+        else if (HubNavigation.currentState == HubState.TimeTrial || HubNavigation.currentState == HubState.Hub)
+        {
+            timeObject.SetActive(true);
+
+            int minutes= Mathf.FloorToInt(GameEvents.timePassed / 60f);
+            int seconds = Mathf.FloorToInt(GameEvents.timePassed % 60f);
+
+            time.text = "Time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
+        }
+
+        if (currentLap == 2 && hasRun == false)
         {
             GameNavigation.OnRaceFinish();
             Standings.GetFinalStandings();
+            GameEvents.timer.Stop();
+            SaveVars.addTime(GameEvents.timePassed);
             hasRun = true;
         }
-        position.text = "Pos: " + Pos.ToString();
     }
 }

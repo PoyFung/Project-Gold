@@ -15,6 +15,13 @@ public class kart
     public int numWay;
     public float dist;
 }
+
+public class kartTime
+{
+    [SerializeField]
+    public string name;
+    public float time;
+}
 public class Standings : MonoBehaviour
 {
     public static List<kart> kartList;
