@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.tag == "Finish Line")//&& countWaypoint == waypoints.Count
+        if (collision.tag == "Finish Line" && countWaypoint == waypoints.Count)
         {
             GUI.currentLap += 1;
             countWaypoint = 0;

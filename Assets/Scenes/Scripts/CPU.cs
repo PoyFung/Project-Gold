@@ -104,6 +104,7 @@ public class CPU : MonoBehaviour
 
     public void SetTargetPosition(Vector3 targetPosition)
     {
+        //Vector3 offset = new Vector3(30.0f, 0, 0);
         this.targetPosition = targetPosition;
     }
 }

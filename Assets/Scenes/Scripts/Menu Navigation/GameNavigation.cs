@@ -27,6 +27,7 @@ public class GameNavigation : MonoBehaviour
     public bool hasRun = false;
 
     public GameObject GUI;
+    public GameObject MiniMap;
     public GameObject pause;
     public GameObject settings;
     public GameObject results;
@@ -63,6 +64,7 @@ public class GameNavigation : MonoBehaviour
                 Time.timeScale = 0;
                 AudioListener.volume = 0;
                 GUI.SetActive(false);
+                MiniMap.SetActive(false);
                 pause.SetActive(true);
                 break;
 
@@ -73,6 +75,7 @@ public class GameNavigation : MonoBehaviour
 
             case GameState.Finish:
                 GUI.SetActive(false);
+                MiniMap.SetActive(false);
                 resultScreenTransitions();
                 break;
         }

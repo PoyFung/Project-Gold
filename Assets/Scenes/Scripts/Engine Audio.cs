@@ -8,6 +8,7 @@ public class EngineAudio : MonoBehaviour
 
     public AudioSource idle;
     public AudioSource running;
+    public AudioSource hit;
 
     public float minSpeed;
     public float maxSpeed;
@@ -47,6 +48,14 @@ public class EngineAudio : MonoBehaviour
         if(currentSpeed > maxSpeed)
         {
             running.pitch = maxPitch;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            hit.Play();
         }
     }
 }
