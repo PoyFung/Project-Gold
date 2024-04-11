@@ -120,7 +120,7 @@ public class GameNavigation : MonoBehaviour
             hasRun = true;
         }
 
-        else if (hasRun == false && HubNavigation.currentState == HubState.TimeTrial)
+        else if (hasRun == false && HubNavigation.currentState == HubState.TrialHistory)
         {
             //UnityEngine.Debug.Log(SaveVars.savedTimes.Count);
             for (int i = 0; i < SaveVars.savedTimes.Count; i++)
@@ -155,7 +155,7 @@ public class GameNavigation : MonoBehaviour
                 }
             }
 
-            else if (HubNavigation.currentState == HubState.TimeTrial)
+            else if (HubNavigation.currentState == HubState.TrialHistory)
             {
                 for (int i = 0; i < SaveVars.savedTimes.Count; i++)
                 {

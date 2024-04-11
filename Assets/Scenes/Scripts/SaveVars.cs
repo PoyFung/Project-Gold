@@ -40,11 +40,25 @@ public class SaveVars : MonoBehaviour
     {
         if (savedTimes.Count == GameNavigation.TrialResults.Count)
         {
-            savedTimes.RemoveAt(savedTimes.Count - 1);
+            for (int i = 0; i < savedTimes.Count; i++)
+            {
+                if (newTime < savedTimes[i])
+                {
+                    savedTimes.RemoveAt(savedTimes.Count - 1);
+                    savedTimes.Add(newTime);
+                    savedTimes.Sort();
+                    Save();
+                    break;
+                }
+            }
         }
-        savedTimes.Add(newTime);
-        savedTimes.Sort();
-        Save();
+
+        if (savedTimes.Count < GameNavigation.TrialResults.Count)
+        {
+            savedTimes.Add(newTime);
+            savedTimes.Sort();
+            Save();
+        }
     }
 
     public static void Save()

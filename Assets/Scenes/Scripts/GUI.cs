@@ -14,7 +14,7 @@ public class GUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI time;
 
     public static int Pos;
-    public bool hasRun = false;
+    public static bool hasRun = false;
 
     private PlayerController playerController;
 

@@ -145,6 +145,12 @@ public class CarPhysics : MonoBehaviour
             Debug.DrawLine(forcePos.position, hitInfo.point, Color.red);
             wheel.transform.position = hitInfo.point + transform.up;
         }
+
+        else //Counter Force
+        {
+            Vector3 springForceDir = -forcePos.up;
+            rb.AddForceAtPosition(springForceDir*1000, forcePos.position);
+        }
     }
 
     void HorizontalFriction(Transform forcePos)

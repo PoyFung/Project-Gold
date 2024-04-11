@@ -44,7 +44,7 @@ public class CPU : MonoBehaviour
 
     private void Start()
     {
-        power = Random.Range(500,600);
+        power = Random.Range(575,610);
         distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
     }
 
@@ -66,6 +66,13 @@ public class CPU : MonoBehaviour
         float dot = Vector3.Dot(transform.forward, dirToMovePosition);
 
         forwardAmount = 1f;
+
+        /*
+        if (carPhysics.rb.velocity.magnitude < 1f)
+        {
+            forwardAmount = -1f;
+        }
+        */
 
         float angleToDir = Vector3.SignedAngle(transform.forward, dirToMovePosition, Vector3.up);
 

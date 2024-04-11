@@ -49,10 +49,19 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frames
     void Update()
     {
-        inputVert = Input.GetAxis("Vertical") * power * 10;
-        inputHor = Input.GetAxis("Horizontal") * turnAmount*10;
+        if (GUI.hasRun == false)
+        {
+            playerController();
+        }
+
+        else if (GUI.hasRun == true)
+        {
+            cpuController();
+            waypointDistDetection = 25;
+        }
         distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
-        DistToWaypoint();
+        targetPosition = waypoints[currentWaypoint].position;
+        DistToWaypoint(targetPosition);
     }
 
     private void FixedUpdate()
@@ -66,7 +75,7 @@ public class PlayerController : MonoBehaviour
         carPhysics.Acceleration(BLPos, inputVert);
     }
 
-    public void DistToWaypoint()
+    public void DistToWaypoint(Vector3 targetPosition)
     {
         SetTargetPosition(waypoints[currentWaypoint].position);
         if (Vector3.Distance(waypoints[currentWaypoint].position, transform.position) < waypointDistDetection)
@@ -80,6 +89,41 @@ public class PlayerController : MonoBehaviour
             }
         }
         Debug.DrawRay(transform.position, waypoints[currentWaypoint].position - transform.position, Color.yellow);
+    }
+
+    public void playerController()
+    {
+        inputVert = Input.GetAxis("Vertical") * power * 10;
+        inputHor = Input.GetAxis("Horizontal") * turnAmount * 10;
+    }
+
+    public void cpuController()
+    {
+        DistToWaypoint(targetPosition);
+        distFromWaypoint = Vector3.Distance(targetPosition, transform.position);
+
+        float forwardAmount = 0f;
+        float turnDir = 0f;
+
+        Vector3 dirToMovePosition = (targetPosition - transform.position).normalized;
+        float dot = Vector3.Dot(transform.forward, dirToMovePosition);
+
+        forwardAmount = 1f;
+
+        float angleToDir = Vector3.SignedAngle(transform.forward, dirToMovePosition, Vector3.up);
+
+        if (angleToDir > 0)
+        {
+            turnDir = -1f;
+        }
+
+        else if (angleToDir < 0)
+        {
+            turnDir = 1f;
+        }
+
+        inputVert = forwardAmount * power * 10;
+        inputHor = turnDir * turnAmount * 10;
     }
 
     public void SetTargetPosition(Vector3 targetPosition)
