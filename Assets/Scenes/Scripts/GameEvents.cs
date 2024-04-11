@@ -20,7 +20,7 @@ public class GameEvents : MonoBehaviour
 
     private void Awake()
     {
-
+        
     }
 
     // Start is called before the first frame update

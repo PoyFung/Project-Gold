@@ -111,17 +111,18 @@ public class GameNavigation : MonoBehaviour
             {
                 TextMeshProUGUI pos = RacerResults[i].transform.Find("Position Num").GetComponent<TextMeshProUGUI>();
                 TextMeshProUGUI name = RacerResults[i].transform.Find("Racer Name").GetComponent<TextMeshProUGUI>();
-                //TextMeshProUGUI points = RacerResults[i].transform.Find("Points").GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI points = RacerResults[i].transform.Find("Points").GetComponent<TextMeshProUGUI>();
 
                 pos.text = Standings.finalStands[i].position.ToString();
                 name.text = Standings.finalStands[i].name;
+                points.text = Standings.finalStands[i].points.ToString();
             }
             hasRun = true;
         }
 
         else if (hasRun == false && HubNavigation.currentState == HubState.TimeTrial)
         {
-            UnityEngine.Debug.Log(SaveVars.savedTimes.Count);
+            //UnityEngine.Debug.Log(SaveVars.savedTimes.Count);
             for (int i = 0; i < SaveVars.savedTimes.Count; i++)
             {
                 TextMeshProUGUI pos = TrialResults[i].transform.Find("Position Num").GetComponent<TextMeshProUGUI>();

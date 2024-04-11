@@ -10,6 +10,7 @@ public class kart
     [SerializeField]
     public string name;
     public int position;
+    public int points;
     public PlayerController playerKart=null;
     public CPU cpuKart=null;
     public int numWay;
@@ -51,13 +52,23 @@ public class Standings : MonoBehaviour
 
             else if (childTrans.GetComponent<CPU>()!=null)
             {
-                CPU childCPU = childTrans.GetComponent<CPU>();
-                newKart.name = ("CPU " + cpuRacerNum.ToString());
-                newKart.cpuKart = childCPU;
-                newKart.dist = childCPU.distFromWaypoint;
-                newKart.numWay = childCPU.passedWaypoints;
-                kartList.Add(newKart);
-                childCPU.Position = i + 1;
+                if (HubNavigation.currentState==HubState.GrandPrix)
+                {
+                    CPU childCPU = childTrans.GetComponent<CPU>();
+                    newKart.name = ("CPU " + cpuRacerNum.ToString());
+                    newKart.cpuKart = childCPU;
+                    newKart.dist = childCPU.distFromWaypoint;
+                    newKart.numWay = childCPU.passedWaypoints;
+                    kartList.Add(newKart);
+                    childCPU.Position = i + 1;
+                }
+
+                else if (HubNavigation.currentState == HubState.TrialHistory)
+                {
+                    CPU childCPU = childTrans.GetComponent<CPU>();
+                    childCPU.gameObject.SetActive(false);
+                }
+                
             }
             playerRacerNum++;
             cpuRacerNum++;
@@ -114,6 +125,33 @@ public class Standings : MonoBehaviour
         finalStands = new List<kart>();
         for (int i = 0; i < kartList.Count; i++)
         {
+            switch (kartList[i].position)
+            {
+                case 1:
+                    kartList[i].points += 10;
+                    break;
+                case 2:
+                    kartList[i].points += 8;
+                    break;
+                case 3:
+                    kartList[i].points += 6;
+                    break;
+                case 4:
+                    kartList[i].points += 5;
+                    break;
+                case 5:
+                    kartList[i].points += 4;
+                    break;
+                case 6:
+                    kartList[i].points += 3;
+                    break;
+                case 7:
+                    kartList[i].points += 2;
+                    break;
+                case 8:
+                    kartList[i].points += 1;
+                    break;
+            }
             finalStands.Add(kartList[i]);
         }
     }

@@ -23,6 +23,7 @@ public class CPU : MonoBehaviour
     private CarPhysics carPhysics;
 
     private Vector3 targetPosition;
+    public bool setTarget = false;
 
     public float waypointDistDetection;
     public int passedWaypoints;
@@ -43,13 +44,20 @@ public class CPU : MonoBehaviour
 
     private void Start()
     {
+        power = Random.Range(500,600);
         distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
     }
 
     void Update()
     {
-        DistToWaypoint();
-        distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position,transform.position);
+        Vector3 offset = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+        if (setTarget == false)
+        {
+            targetPosition = waypoints[currentWaypoint].position + offset;
+            setTarget = true;
+        }
+        DistToWaypoint(targetPosition);
+        distFromWaypoint = Vector3.Distance(targetPosition, transform.position);
 
         float forwardAmount = 0f;
         float turnDir = 0f;
@@ -66,7 +74,7 @@ public class CPU : MonoBehaviour
             turnDir = -1f;
         }
 
-        else
+        else if (angleToDir<0)
         {
             turnDir = 1f;
         }
@@ -87,24 +95,18 @@ public class CPU : MonoBehaviour
         carPhysics.Acceleration(BLPos, inputVert);
     }
 
-    public void DistToWaypoint()
+    public void DistToWaypoint(Vector3 targetPosition)
     {
-        SetTargetPosition(waypoints[currentWaypoint].position);
-        if (Vector3.Distance(waypoints[currentWaypoint].position, transform.position) < waypointDistDetection)
+        if (Vector3.Distance(targetPosition, transform.position) < waypointDistDetection)
         {
             currentWaypoint++;
             passedWaypoints++;
+            setTarget = false;
             if (currentWaypoint == waypoints.Count)
             {
                 currentWaypoint = 0;
             }
         }
-        Debug.DrawRay(transform.position, waypoints[currentWaypoint].position - transform.position, Color.yellow);
-    }
-
-    public void SetTargetPosition(Vector3 targetPosition)
-    {
-        //Vector3 offset = new Vector3(30.0f, 0, 0);
-        this.targetPosition = targetPosition;
+        Debug.DrawRay(transform.position, targetPosition - transform.position, Color.yellow);
     }
 }

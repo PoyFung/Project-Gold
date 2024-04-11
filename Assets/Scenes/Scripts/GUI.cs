@@ -37,7 +37,7 @@ public class GUI : MonoBehaviour
             position.text = "Pos: " + Pos.ToString();
         }
 
-        else if (HubNavigation.currentState == HubState.TimeTrial || HubNavigation.currentState == HubState.Hub)
+        else if (HubNavigation.currentState == HubState.TrialHistory || HubNavigation.currentState == HubState.Hub)
         {
             timeObject.SetActive(true);
 
