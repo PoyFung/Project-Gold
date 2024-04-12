@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour
             cpuController();
             waypointDistDetection = 25;
         }
+
         distFromWaypoint = Vector3.Distance(waypoints[currentWaypoint].position, transform.position);
         targetPosition = waypoints[currentWaypoint].position;
         DistToWaypoint(targetPosition);

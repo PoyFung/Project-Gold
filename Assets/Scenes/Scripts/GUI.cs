@@ -29,7 +29,7 @@ public class GUI : MonoBehaviour
     void Update()
     {
         speed.text = "Speed: " + CarPhysics.rbVelocity.ToString("0");
-        lap.text = "Lap: " + currentLap.ToString() + "/2";
+        lap.text = "Lap: " + currentLap.ToString() + "/1";
         
         if (HubNavigation.currentState == HubState.GrandPrix || HubNavigation.currentState == HubState.Hub)
         {
@@ -47,7 +47,7 @@ public class GUI : MonoBehaviour
             time.text = "Time: " + minutes.ToString("00") + ":" + seconds.ToString("00");
         }
 
-        if (currentLap == 3 && hasRun == false)
+        if (currentLap == 2 && hasRun == false)
         {
             GameNavigation.OnRaceFinish();
             Standings.GetFinalStandings();

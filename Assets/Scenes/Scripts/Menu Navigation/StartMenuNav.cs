@@ -59,7 +59,6 @@ public class StartMenuNav : MonoBehaviour
 
     public void OnQuit()
     {
-        EditorApplication.ExitPlaymode();
         Application.Quit();
     }
 }

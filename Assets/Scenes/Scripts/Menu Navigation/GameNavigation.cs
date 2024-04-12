@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -63,6 +62,7 @@ public class GameNavigation : MonoBehaviour
             case GameState.Pause:
                 Time.timeScale = 0;
                 AudioListener.volume = 0;
+                settings.SetActive(false);
                 GUI.SetActive(false);
                 MiniMap.SetActive(false);
                 pause.SetActive(true);
@@ -100,6 +100,11 @@ public class GameNavigation : MonoBehaviour
     public static void OnRaceFinish()
     {
         currentState = GameState.Finish;
+    }
+
+    public static void OnBack()
+    {
+        currentState = GameState.Pause;
     }
 
     public void resultScreenTransitions()

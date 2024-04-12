@@ -57,10 +57,13 @@ public class HubNavigation : MonoBehaviour
                 modeMenu.SetActive(false);
                 timeTrialMenu.SetActive(true);
                 grandPrixMenu.SetActive(false);
+                candaCupMenu.SetActive(false);
+                Times.gameObject.SetActive(false);
                 break;
 
             case HubState.TrialHistory:
                 timeTrialMenu.SetActive(false);
+                Times.gameObject.SetActive(true);
                 candaCupMenu.SetActive(true);
                 if (hasRun1 == false)
                 {
